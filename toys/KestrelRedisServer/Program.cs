@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Transport;
@@ -13,17 +15,28 @@ namespace KestrelRedisServer
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseLibuv()
+        /// <summary>
+        /// 监听端口
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) {
+            var port = 6379;
+            int.TryParse( args.FirstOrDefault(p=>p.StartsWith("--Port:",StringComparison.OrdinalIgnoreCase))?.Substring(7),out port);
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseLibuv() //需要安装 Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv  Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions
                 .UseKestrel(options =>
                 {
                     options.ApplicationSchedulingMode = SchedulingMode.Inline;
-                    // HTTP 5000
-                    options.ListenLocalhost(5000);
+                    //// HTTP 5000
+                    //options.ListenLocalhost(5000);
 
                     // TCP 6379
-                    options.ListenLocalhost(6379, builder => builder.UseConnectionHandler<RedisConnectionHandler>());
+                    //options.ListenLocalhost(6379, builder => builder.UseConnectionHandler<RedisConnectionHandler>());
+
+                    options.ListenAnyIP(port, builder => builder.UseConnectionHandler<RedisConnectionHandler>());
                 }).UseStartup<Startup>();
+        }
     }
 }

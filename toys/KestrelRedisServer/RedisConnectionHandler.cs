@@ -6,10 +6,25 @@ using StackExchange.Redis.Server;
 
 namespace KestrelRedisServer
 {
+    /// <summary>
+    /// 连接处理
+    /// </summary>
     public class RedisConnectionHandler : ConnectionHandler
     {
+        /// <summary>
+        /// 服务端
+        /// </summary>
         private readonly RespServer _server;
+        /// <summary>
+        /// 注入 服务端实例
+        /// </summary>
+        /// <param name="server"></param>
         public RedisConnectionHandler(RespServer server) => _server = server;
+        /// <summary>
+        /// 发生连接时
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public override async Task OnConnectedAsync(ConnectionContext connection)
         {
             try

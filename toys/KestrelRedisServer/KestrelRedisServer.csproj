@@ -8,7 +8,16 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv" Version="2.1.3" />
-    <ProjectReference Include="..\StackExchange.Redis.Server\StackExchange.Redis.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Linyee.StackExchange.Redis.Server\Linyee.StackExchange.Redis.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="StartLocal.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

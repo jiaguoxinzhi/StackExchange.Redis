@@ -19,20 +19,32 @@ namespace StackExchange.Redis
         private readonly ReadOnlyMemory<byte> _memory;
         private readonly long _overlappedValue64;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="overlappedValue64"></param>
+        /// <param name="memory"></param>
+        /// <param name="objectOrSentinel"></param>
         // internal bool IsNullOrDefaultValue {  get { return (valueBlob == null && valueInt64 == 0L) || ((object)valueBlob == (object)NullSentinel); } }
-        private RedisValue(long overlappedValue64, ReadOnlyMemory<byte> memory, object objectOrSentinel)
+        private RedisValue(long overlappedValue64, ReadOnlyMemory<byte> memory, object objectOrSentinel):this() 
         {
             _overlappedValue64 = overlappedValue64;
             _memory = memory;
             _objectOrSentinel = objectOrSentinel;
         }
 
-        internal RedisValue(object obj, long val)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="val"></param>
+        internal RedisValue(object obj, long val):this()
         {   // this creates a bodged RedisValue which should **never**
             // be seen directly; the contents are ... unexpected
             _overlappedValue64 = val;
             _objectOrSentinel = obj;
             _memory = default;
+            IsIntNumber = true;
         }
 #pragma warning disable RCS1085 // Use auto-implemented property.
         internal object DirectObject => _objectOrSentinel;
@@ -106,7 +118,8 @@ namespace StackExchange.Redis
         /// <summary>
         /// Indicates whether the value is a primitive integer
         /// </summary>
-        public bool IsInteger => _objectOrSentinel == Sentinel_Integer;
+        //public bool IsInteger => _objectOrSentinel == Sentinel_Integer;
+        public bool IsInteger => _objectOrSentinel.ToString()== _overlappedValue64.ToString();
 
         /// <summary>
         /// Indicates whether the value should be considered a null value
@@ -369,6 +382,11 @@ namespace StackExchange.Redis
                 throw new InvalidOperationException("Unknown type");
             }
         }
+
+        /// <summary>
+        /// 是否整数
+        /// </summary>
+        public bool IsIntNumber { get; }
 
         /// <summary>
         /// Get the size of this value in bytes

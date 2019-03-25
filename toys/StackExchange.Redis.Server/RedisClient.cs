@@ -30,6 +30,9 @@ namespace StackExchange.Redis.Server
             _subscripions.Remove(channel);
             return _subscripions.Count;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public int Database { get; set; }
         public string Name { get; set; }
         internal IDuplexPipe LinkedPipe { get; set; }

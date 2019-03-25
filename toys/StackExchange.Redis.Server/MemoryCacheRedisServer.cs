@@ -7,12 +7,41 @@ using System.Runtime.CompilerServices;
 
 namespace StackExchange.Redis.Server
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MemoryCacheRedisServer : RedisServer
     {
-        public MemoryCacheRedisServer(TextWriter output = null) : base(1, output)
-            => CreateNewCache();
 
-        private MemoryCache _cache;
+        /// <summary>
+        /// 字典
+        /// </summary>
+
+        protected Dictionary<int, MemoryCache> _cache_dict = new Dictionary<int, MemoryCache>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="output"></param>
+        public MemoryCacheRedisServer(TextWriter output = null) : this(16, output)
+        {
+        }
+
+        /// <summary>
+        /// 创建多数据库
+        /// </summary>
+        /// <param name="databases"></param>
+        /// <param name="output"></param>
+        public MemoryCacheRedisServer(int databases , TextWriter output = null) : base(databases, output)
+        {
+            for(var fi=0;fi< databases;fi++)
+            {
+                _cache_dict.Add(fi, new MemoryCache(GetType().ToString()+ "_"+fi));
+            }
+            _cache = _cache_dict[0];
+        }
+
+        protected MemoryCache _cache;
 
         private void CreateNewCache()
         {
@@ -27,7 +56,9 @@ namespace StackExchange.Redis.Server
             base.Dispose(disposing);
         }
 
-        protected override long Dbsize(int database) => _cache.GetCount();
+        protected override long Dbsize(int database) {
+            return _cache.GetCount();
+        }
         protected override RedisValue Get(int database, RedisKey key)
             => RedisValue.Unbox(_cache[key]);
         protected override void Set(int database, RedisKey key, RedisValue value)

@@ -14,11 +14,23 @@ using Pipelines.Sockets.Unofficial.Arenas;
 
 namespace StackExchange.Redis.Server
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract partial class RespServer : IDisposable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ShutdownReason
         {
+            /// <summary>
+            /// 服务端释放
+            /// </summary>
             ServerDisposed,
+            /// <summary>
+            /// 客户端发起
+            /// </summary>
             ClientInitiated,
         }
         private readonly List<RedisClient> _clients = new List<RedisClient>();
@@ -40,6 +52,7 @@ namespace StackExchange.Redis.Server
                     return null;
                 return (RedisCommandAttribute)Attribute.GetCustomAttribute(method, typeof(RedisCommandAttribute));
             }
+
             var grouped = from method in server.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                           let attrib = CheckSignatureAndGetAttribute(method)
                           where attrib != null
@@ -64,12 +77,21 @@ namespace StackExchange.Redis.Server
             return result;
         }
 
+        /// <summary>
+        /// 获取状态
+        /// </summary>
+        /// <returns></returns>
         public string GetStats()
         {
             var sb = new StringBuilder();
             AppendStats(sb);
             return sb.ToString();
         }
+
+        /// <summary>
+        /// 获取状态
+        /// </summary>
+        /// <param name="sb"></param>
         protected virtual void AppendStats(StringBuilder sb)
         {
             sb.Append("Current clients:\t").Append(ClientCount).AppendLine()
@@ -166,6 +188,7 @@ namespace StackExchange.Redis.Server
                            : request.WrongArgCount();
                 }
 
+                Console.WriteLine("== request={0} _operation={1} cmd={2} subcmd={3} Database={4}", request.GetString(0), _operation.Method.ToString(), null,null, client.Database);
                 return _operation(client, request);
             }
             private bool CheckArity(int count)
@@ -411,6 +434,12 @@ namespace StackExchange.Redis.Server
         public long TotalCommandsProcesed => _totalCommandsProcesed;
         public long TotalErrorCount => _totalErrorCount;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public TypedRedisValue Execute(RedisClient client, RedisRequest request)
         {
             if (request.Count == 0) return default;// not a request
@@ -423,6 +452,8 @@ namespace StackExchange.Redis.Server
                 TypedRedisValue result;
                 if (_commands.TryGetValue(cmdBytes, out var cmd))
                 {
+                    Console.WriteLine("LockFree={0} HasSubCommands={1} cmd={2} subcmd={3} Database={4}", cmd.LockFree,cmd.HasSubCommands,cmd.Command,cmd.SubCommand, client.Database);
+
                     if (cmd.HasSubCommands)
                     {
                         cmd = cmd.Resolve(request);

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28531.58
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3AD17044-6BFF-4750-9AC2-2CA466375F2A}"
 	ProjectSection(SolutionItems) = preProject
@@ -114,6 +114,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{153A10E4-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleBaseline", "toys\TestConsoleBaseline\TestConsoleBaseline.csproj", "{D58114AE-4998-4647-AFCA-9353D20495AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linyee", "Linyee", "{24784F4F-3708-437E-B35E-B2B2EDB03ADD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppRedisClient", "Linyee\ConsoleAppRedisClient\ConsoleAppRedisClient.csproj", "{681CCFF2-FA4A-4F1E-A47D-2CE1D6838D93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linyee.StackExchange.Redis.Server", "Linyee.StackExchange.Redis.Server\Linyee.StackExchange.Redis.Server.csproj", "{60AD7494-0C43-471C-ACD8-048043537BC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS_Core_Common", "..\payapi.git\api.pay-api\Pay_Yh-percode\api_percode\WS_Core_Common\WS_Core_Common.csproj", "{51CA8AAD-5866-4342-8E9D-0D8B38F2F600}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS_Core", "..\payapi.git\api.pay-api\Pay_Yh-percode\api_percode\WS_Core\WS_Core.csproj", "{4854FBA6-D4A8-482E-B437-07D838EBC561}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WS_Server", "..\payapi.git\api.pay-api\Pay_Yh-percode\api_percode\WS_Server\WS_Server.csproj", "{5B127065-0696-4E49-93EE-19D5DE1CFA01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linyee.Redis", "Linyee.Redis\Linyee.Redis.csproj", "{F1221079-5EAE-4378-83D3-3464B4C1DB61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +174,30 @@ Global
 		{D58114AE-4998-4647-AFCA-9353D20495AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D58114AE-4998-4647-AFCA-9353D20495AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D58114AE-4998-4647-AFCA-9353D20495AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681CCFF2-FA4A-4F1E-A47D-2CE1D6838D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681CCFF2-FA4A-4F1E-A47D-2CE1D6838D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681CCFF2-FA4A-4F1E-A47D-2CE1D6838D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681CCFF2-FA4A-4F1E-A47D-2CE1D6838D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60AD7494-0C43-471C-ACD8-048043537BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60AD7494-0C43-471C-ACD8-048043537BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60AD7494-0C43-471C-ACD8-048043537BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60AD7494-0C43-471C-ACD8-048043537BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51CA8AAD-5866-4342-8E9D-0D8B38F2F600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51CA8AAD-5866-4342-8E9D-0D8B38F2F600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51CA8AAD-5866-4342-8E9D-0D8B38F2F600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51CA8AAD-5866-4342-8E9D-0D8B38F2F600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4854FBA6-D4A8-482E-B437-07D838EBC561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4854FBA6-D4A8-482E-B437-07D838EBC561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4854FBA6-D4A8-482E-B437-07D838EBC561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4854FBA6-D4A8-482E-B437-07D838EBC561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B127065-0696-4E49-93EE-19D5DE1CFA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B127065-0696-4E49-93EE-19D5DE1CFA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B127065-0696-4E49-93EE-19D5DE1CFA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B127065-0696-4E49-93EE-19D5DE1CFA01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1221079-5EAE-4378-83D3-3464B4C1DB61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1221079-5EAE-4378-83D3-3464B4C1DB61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1221079-5EAE-4378-83D3-3464B4C1DB61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1221079-5EAE-4378-83D3-3464B4C1DB61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,6 +218,12 @@ Global
 		{8375813E-FBAF-4DA3-A2C7-E4645B39B931} = {E25031D3-5C64-430D-B86F-697B66816FD8}
 		{3DA1EEED-E9FE-43D9-B293-E000CFCCD91A} = {E25031D3-5C64-430D-B86F-697B66816FD8}
 		{D58114AE-4998-4647-AFCA-9353D20495AE} = {E25031D3-5C64-430D-B86F-697B66816FD8}
+		{681CCFF2-FA4A-4F1E-A47D-2CE1D6838D93} = {24784F4F-3708-437E-B35E-B2B2EDB03ADD}
+		{60AD7494-0C43-471C-ACD8-048043537BC2} = {24784F4F-3708-437E-B35E-B2B2EDB03ADD}
+		{51CA8AAD-5866-4342-8E9D-0D8B38F2F600} = {24784F4F-3708-437E-B35E-B2B2EDB03ADD}
+		{4854FBA6-D4A8-482E-B437-07D838EBC561} = {24784F4F-3708-437E-B35E-B2B2EDB03ADD}
+		{5B127065-0696-4E49-93EE-19D5DE1CFA01} = {24784F4F-3708-437E-B35E-B2B2EDB03ADD}
+		{F1221079-5EAE-4378-83D3-3464B4C1DB61} = {24784F4F-3708-437E-B35E-B2B2EDB03ADD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {193AA352-6748-47C1-A5FC-C9AA6B5F000B}

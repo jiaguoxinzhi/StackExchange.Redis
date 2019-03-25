@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Redis\LinyeeRedisServer.cs" />
+    <Compile Remove="SocketServers\LinyeeConnectionInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Utils\WebClientYh.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Redis\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="SharpZipLib" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\toys\StackExchange.Redis.Server\StackExchange.Redis.Server.csproj" />
+  </ItemGroup>
+
+</Project>

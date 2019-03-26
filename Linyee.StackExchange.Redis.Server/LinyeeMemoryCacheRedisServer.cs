@@ -70,7 +70,7 @@ namespace Linyee.StackExchange.Redis.Server
         /// <returns></returns>
         protected override RedisValue Get(int database, RedisKey key)
         {
-            Console.WriteLine(database+"数据库Get"  );
+            //Console.WriteLine(database+"数据库Get"  );
             _cache = _cache_dict[database];
             return base.Get(database, key);
         }
@@ -82,7 +82,7 @@ namespace Linyee.StackExchange.Redis.Server
         /// <param name="value"></param>
         protected override void Set(int database, RedisKey key, RedisValue value)
         {
-            Console.WriteLine(database + "数据库Set");
+            //Console.WriteLine(database + "数据库Set");
             _cache = _cache_dict[database];
             base.Set(database, key, value);
         }

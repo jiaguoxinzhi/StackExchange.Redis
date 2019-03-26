@@ -806,24 +806,24 @@ namespace StackExchange.Redis.Server
         [RedisCommand(2, LockFree = true)]
         protected virtual TypedRedisValue Select(RedisClient client, RedisRequest request)
         {
-            Console.WriteLine("=== 选择数据库 {0} -> {1}", client.Database, request.GetValue(1).ToString());
+            //Console.WriteLine("=== 选择数据库 {0} -> {1}", client.Database, request.GetValue(1).ToString());
             var raw = request.GetValue(1);
             var val = raw.ToString();
             long lval = -1;
             long.TryParse(val,out lval);
             if (lval<0)
             {
-                Console.WriteLine("== 选择数据库 不是一个索引");
+                //Console.WriteLine("== 选择数据库 不是一个索引");
                 return TypedRedisValue.Error("ERR invalid DB index");
             }
             int db = (int)raw;
             if (db < 0 || db >= Databases)
             {
-                Console.WriteLine("== 选择数据库 索引超出");
+                //Console.WriteLine("== 选择数据库 索引超出");
                 return TypedRedisValue.Error("ERR DB index is out of range");
             }
             client.Database = db;
-            Console.WriteLine("== 选择数据库"+ db);
+            //Console.WriteLine("== 选择数据库"+ db);
             return TypedRedisValue.OK;
         }
 

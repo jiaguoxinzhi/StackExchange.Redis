@@ -23,6 +23,8 @@ namespace KestrelRedisServer
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) {
             var port = 6379;
             int.TryParse( args.FirstOrDefault(p=>p.StartsWith("--Port:",StringComparison.OrdinalIgnoreCase))?.Substring(7),out port);
+            int databases = 16;
+            int.TryParse(args.FirstOrDefault(p => p.StartsWith("--Databases:", StringComparison.OrdinalIgnoreCase))?.Substring(12), out databases);
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseLibuv() //需要安装 Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv  Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions

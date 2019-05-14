@@ -25,6 +25,7 @@ namespace StackExchange.Redis
 
         public RawResult(ResultType resultType, in ReadOnlySequence<byte> payload, bool isNull)
         {
+
             switch (resultType)
             {
                 case ResultType.SimpleString:

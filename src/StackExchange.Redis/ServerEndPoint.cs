@@ -657,6 +657,14 @@ namespace StackExchange.Redis
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 命令发送
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="connection"></param>
+        /// <param name="message"></param>
+        /// <param name="processor"></param>
+        /// <returns></returns>
         internal ValueTask WriteDirectOrQueueFireAndForgetAsync<T>(PhysicalConnection connection, Message message, ResultProcessor<T> processor)
         {
             async ValueTask Awaited(ValueTask<WriteResult> l_result) => await l_result.ForAwait();

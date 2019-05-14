@@ -40,18 +40,38 @@ namespace StackExchange.Redis
 
         public void WaitAll(params Task[] tasks) => multiplexer.WaitAll(tasks);
 
+        /// <summary>
+        /// 异步执行
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        /// <param name="processor"></param>
+        /// <param name="server"></param>
+        /// <returns></returns>
         internal virtual Task<T> ExecuteAsync<T>(Message message, ResultProcessor<T> processor, ServerEndPoint server = null)
         {
             if (message == null) return CompletedTask<T>.Default(asyncState);
             multiplexer.CheckMessage(message);
-            return multiplexer.ExecuteAsyncImpl<T>(message, processor, asyncState, server);
+            var res= multiplexer.ExecuteAsyncImpl<T>(message, processor, asyncState, server);
+            Console.WriteLine($"异步执行:{message.CommandAndKey} 结果:{res.ToJsonString()}");
+            return res;
         }
 
+        /// <summary>
+        /// 同步执行
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        /// <param name="processor"></param>
+        /// <param name="server"></param>
+        /// <returns></returns>
         internal virtual T ExecuteSync<T>(Message message, ResultProcessor<T> processor, ServerEndPoint server = null)
         {
             if (message == null) return default(T); // no-op
             multiplexer.CheckMessage(message);
-            return multiplexer.ExecuteSyncImpl<T>(message, processor, server);
+            var res= multiplexer.ExecuteSyncImpl<T>(message, processor, server);
+            Console.WriteLine($"同步执行:{message.CommandAndKey} 结果:{res.ToJsonString()}");
+            return res;
         }
 
         internal virtual RedisFeatures GetFeatures(in RedisKey key, CommandFlags flags, out ServerEndPoint server)

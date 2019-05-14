@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.IO;
+using System.Text;
 
 namespace StackExchange.Redis
 {
@@ -44,6 +45,11 @@ namespace StackExchange.Redis
 
         public BufferReader(ReadOnlySequence<byte> buffer)
         {
+            //Console.WriteLine($"结果：{buffer.ToHexString()}");
+            var bufstr = Encoding.UTF8.GetString(buffer.ToArray()).Replace("\r", "\\r").Replace("\n", "\\n").Replace("\t", "\\t").Replace("\v", "\\v");
+            LogService.WebSocket10Minute($"结果：{bufstr}");
+            //Console.WriteLine($"结果：{(bufstr+"           ").Substring(0,10)+"..."}");
+
             _buffer = buffer;
             _lastSnapshotPosition = buffer.Start;
             _lastSnapshotBytes = 0;

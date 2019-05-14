@@ -27,9 +27,9 @@ namespace StackExchange.Redis
             Flags = tail.Flags;
         }
 
-        public override string CommandAndKey => tail.CommandAndKey;
+        public override string CommandAndKey => tail?.CommandAndKey;
 
-        public override void AppendStormLog(StringBuilder sb) => tail.AppendStormLog(sb);
+        public override void AppendStormLog(StringBuilder sb) => tail?.AppendStormLog(sb);
 
         public override int GetHashSlot(ServerSelectionStrategy serverSelectionStrategy) => tail.GetHashSlot(serverSelectionStrategy);
 
@@ -41,9 +41,9 @@ namespace StackExchange.Redis
                 bridge?.Multiplexer?.LogLocked(log, "Writing to {0}: {1}", bridge, tail.CommandAndKey);
             }
             catch { }
-            tail.WriteTo(physical);
+            tail?.WriteTo(physical);
         }
-        public override int ArgCount => tail.ArgCount;
+        public override int ArgCount => tail?.ArgCount??0;
 
         public TextWriter Log => log;
     }
@@ -116,6 +116,11 @@ namespace StackExchange.Redis
             createdDateTime = DateTime.UtcNow;
             createdTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
             Status = CommandStatus.WaitingToBeSent;
+
+
+            var bufstr = this.ToJsonString();
+            LogService.WebSocket10Minute($"创建命令：{this.CommandAndKey} 创建消息：{bufstr}");
+            //Console.WriteLine($"创建命令：{this.CommandAndKey}");
         }
 
         internal void SetMasterOnly()
@@ -762,6 +767,7 @@ namespace StackExchange.Redis
             {
                 key.AssertNotNull();
                 Key = key;
+                LogService.WebSocket10Minute($"值：{Key.ToJsonString()}");
             }
 
             public override string CommandAndKey => Command + " " + (string)Key;
@@ -791,6 +797,9 @@ namespace StackExchange.Redis
             {
                 value.AssertNotNull();
                 this.value = value;
+
+                LogService.WebSocket10Minute($"值：{value.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -811,6 +820,8 @@ namespace StackExchange.Redis
                 key2.AssertNotNull();
                 this.key1 = key1;
                 this.key2 = key2;
+                LogService.WebSocket10Minute($"值：{key1.ToJsonString()} {key2.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             public override int GetHashSlot(ServerSelectionStrategy serverSelectionStrategy)
@@ -837,6 +848,8 @@ namespace StackExchange.Redis
             {
                 key1.AssertNotNull();
                 this.key1 = key1;
+                LogService.WebSocket10Minute($"值：{key1.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             public override int GetHashSlot(ServerSelectionStrategy serverSelectionStrategy)
@@ -864,6 +877,7 @@ namespace StackExchange.Redis
                     keys[i].AssertNotNull();
                 }
                 this.keys = keys;
+                LogService.WebSocket10Minute($"值：{keys.ToJsonString()}");// Console.WriteLine($"{}");
             }
 
             public override int GetHashSlot(ServerSelectionStrategy serverSelectionStrategy)
@@ -895,6 +909,7 @@ namespace StackExchange.Redis
             {
                 value.AssertNotNull();
                 this.value = value;
+                LogService.WebSocket10Minute($"值：{value.ToJsonString()}")            ;// Console.WriteLine($"{");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -930,6 +945,7 @@ namespace StackExchange.Redis
                     values[i].AssertNotNull();
                 }
                 this.values = values;
+                LogService.WebSocket10Minute($"值：{values.ToJsonString()}");// Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -953,6 +969,9 @@ namespace StackExchange.Redis
                     keys[i].AssertNotNull();
                 }
                 this.keys = keys;
+
+                LogService.WebSocket10Minute($"值：{keys.ToJsonString()}");
+
             }
 
             public override int GetHashSlot(ServerSelectionStrategy serverSelectionStrategy)
@@ -983,6 +1002,7 @@ namespace StackExchange.Redis
             {
                 value.AssertNotNull();
                 this.value = value;
+                LogService.WebSocket10Minute($"值：{value.ToJsonString()}");//Console.WriteLine($"{}")}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1007,6 +1027,7 @@ namespace StackExchange.Redis
                 this.values = values;
                 key1.AssertNotNull();
                 this.key1 = key1;
+                LogService.WebSocket10Minute($"值：{key1.ToJsonString()} {values.ToJsonString()}");// Console.WriteLine($"{}");
             }
 
             public override int GetHashSlot(ServerSelectionStrategy serverSelectionStrategy)
@@ -1035,6 +1056,7 @@ namespace StackExchange.Redis
                     values[i].AssertNotNull();
                 }
                 this.values = values;
+                LogService.WebSocket10Minute($"值：{values.ToJsonString()}");//Console.WriteLine($"{}")}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1063,6 +1085,7 @@ namespace StackExchange.Redis
                 physical.Write(Key);
                 physical.WriteBulkString(value0);
                 physical.WriteBulkString(value1);
+                LogService.WebSocket10Minute($"值：{value0.ToJsonString()} {value1.ToJsonString()}");//Console.WriteLine($"{}")}");
             }
             public override int ArgCount => 3;
         }
@@ -1078,6 +1101,7 @@ namespace StackExchange.Redis
                 this.value0 = value0;
                 this.value1 = value1;
                 this.value2 = value2;
+                LogService.WebSocket10Minute($"值：{value0.ToJsonString()} {value1.ToJsonString()} {value2.ToJsonString()}");// Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1104,6 +1128,7 @@ namespace StackExchange.Redis
                 this.value1 = value1;
                 this.value2 = value2;
                 this.value3 = value3;
+                LogService.WebSocket10Minute($"值：{value0.ToJsonString()} {value1.ToJsonString()} {value2.ToJsonString()} {value3.ToJsonString()}");// Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1142,6 +1167,8 @@ namespace StackExchange.Redis
                     values[i].AssertNotNull();
                 }
                 this.values = values;
+                LogService.WebSocket10Minute($"值：{slot.ToJsonString()} {values.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             public override int GetHashSlot(ServerSelectionStrategy serverSelectionStrategy)
@@ -1167,6 +1194,8 @@ namespace StackExchange.Redis
             {
                 value.AssertNotNull();
                 this.value = value;
+                LogService.WebSocket10Minute($"值：{value.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1186,6 +1215,8 @@ namespace StackExchange.Redis
             {
                 value.AssertNotNull();
                 this.value = value;
+                LogService.WebSocket10Minute($"值：{value.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             public override void AppendStormLog(StringBuilder sb)
@@ -1210,6 +1241,8 @@ namespace StackExchange.Redis
             {
                 value.AssertNotNull();
                 this.value = value;
+                LogService.WebSocket10Minute($"值：{value.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1229,6 +1262,8 @@ namespace StackExchange.Redis
                 value1.AssertNotNull();
                 this.value0 = value0;
                 this.value1 = value1;
+                LogService.WebSocket10Minute($"值：{value0.ToJsonString()} {value1.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1251,6 +1286,8 @@ namespace StackExchange.Redis
                 this.value0 = value0;
                 this.value1 = value1;
                 this.value2 = value2;
+                LogService.WebSocket10Minute($"值：{value0.ToJsonString()} {value1.ToJsonString()} {value2.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)
@@ -1278,6 +1315,9 @@ namespace StackExchange.Redis
                 this.value2 = value2;
                 this.value3 = value3;
                 this.value4 = value4;
+
+                LogService.WebSocket10Minute($"值：{value0.ToJsonString()} {value1.ToJsonString()} {value2.ToJsonString()} {value3.ToJsonString()} {value4.ToJsonString()}");
+                //Console.WriteLine($"{}");
             }
 
             protected override void WriteImpl(PhysicalConnection physical)

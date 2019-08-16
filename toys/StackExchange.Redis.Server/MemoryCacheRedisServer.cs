@@ -60,7 +60,12 @@ namespace StackExchange.Redis.Server
             return _cache.GetCount();
         }
         protected override RedisValue Get(int database, RedisKey key)
-            => RedisValue.Unbox(_cache[key]);
+        {
+            Console.WriteLine($">{key.ToString()}");
+            var val= RedisValue.Unbox(_cache[key]);
+            Console.WriteLine($">{val.ToString()}");
+            return val;
+        }
         protected override void Set(int database, RedisKey key, RedisValue value)
             => _cache[key] = value.Box();
         protected override bool Del(int database, RedisKey key)
